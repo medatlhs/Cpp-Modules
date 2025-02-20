@@ -13,7 +13,10 @@ public:
     Fixed(const Fixed&oldObj);
 
     ~Fixed();
-    Fixed& operator=(const Fixed&oldObj);
+
+    Fixed&  operator=(const Fixed&oldObj);
+    
+    friend std::ostream& operator<<(std::ostream& out, const Fixed &obj);
 
     int toInt( void ) const;
     float toFloat( void ) const;
