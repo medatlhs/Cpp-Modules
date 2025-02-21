@@ -1,3 +1,6 @@
+#ifndef BSP_HPP
+#define BSP_HPP
+
 #include <iostream>
 #include <string>
 
@@ -46,3 +49,5 @@ public:
 
     friend std::ostream& operator<<(std::ostream& out, const Fixed &obj);
 };
+
+#endif
