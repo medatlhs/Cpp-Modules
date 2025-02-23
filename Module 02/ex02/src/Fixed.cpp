@@ -2,9 +2,6 @@
 
 const int Fixed::fractionalBits = 8;
 
-Fixed::~Fixed() {
-}
-
 Fixed::Fixed() : fixedPoint(0) {
 }
 
@@ -13,7 +10,7 @@ Fixed::Fixed(const Fixed&oldObj) {
 }
 
 Fixed::Fixed(const int value) {
-    this->fixedPoint = value << 8;
+    this->fixedPoint = value * 256;
 }
 
 Fixed::Fixed(const float value) {
@@ -26,7 +23,7 @@ std::ostream& operator<<(std::ostream& out, const Fixed &obj) {
 }
 
 float Fixed::toFloat(void) const {
-    return (this->fixedPoint / 256.0f); // 256.0f to ensure float division
+    return (this->fixedPoint / 256.0f);
 }
 
 int Fixed::toInt(void) const {
@@ -93,6 +90,7 @@ float Fixed::operator/(const Fixed&obj) {
 }
 
 // Pre-Fix
+
 Fixed& Fixed::operator++() {
     this->fixedPoint += 1;
     return (*this);
@@ -104,6 +102,7 @@ Fixed& Fixed::operator--() {
 }
 
 // Post-Prefix
+
 Fixed Fixed::operator ++(int) {
     Fixed temp = *this;
     this->fixedPoint += 1;

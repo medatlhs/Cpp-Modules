@@ -34,10 +34,10 @@ public:
     float operator *(const Fixed&obj);
     float operator /(const Fixed&obj);
 
-// prefix ++Example
+// prefix
     Fixed &operator ++();
     Fixed &operator --();
-// postfix Example++
+// postfix
     Fixed operator ++(int);
     Fixed operator --(int);
 
