@@ -26,7 +26,7 @@ std::ostream& operator<<(std::ostream& out, const Fixed &obj) {
 }
 
 float Fixed::toFloat(void) const {
-    return (this->fixedPoint / 256.0f); // 256.0f to ensure float division
+    return (this->fixedPoint / 256.0f);
 }
 
 int Fixed::toInt(void) const {

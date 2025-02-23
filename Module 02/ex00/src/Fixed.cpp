@@ -6,16 +6,16 @@ Fixed::Fixed() : fixedPoint(0) {
     std::cout << "Default constructor called\n";
 }
 
-Fixed::Fixed(const Fixed&oldObj) {
-    fixedPoint = oldObj.fixedPoint;
+Fixed::Fixed(const Fixed&other) {
     std::cout << "Copy constructor called\n";
+    fixedPoint = other.getRawBits();
 }
 
-Fixed& Fixed::operator=(const Fixed&oldObj) {
-    if (this != &oldObj) {
-        this->fixedPoint = oldObj.fixedPoint;
-    }
+Fixed& Fixed::operator=(const Fixed&other) {
     std::cout << "Copy assignment operator called\n";
+    if (this != &other) {
+        this->fixedPoint = other.getRawBits();
+    }
     return *this;
 }
 
@@ -31,10 +31,3 @@ int Fixed::getRawBits( void ) const {
 void Fixed::setRawBits( int const raw ) {
     this->fixedPoint = raw;
 }
-
-/*
-decimal value => 3.75
-binary repres => 0011.1100
-shift d point => 3.75 * 2^4 => 00111100
-getback decimal value => 00111100 / 2^4 => 3.75
-*/

@@ -1,12 +1,10 @@
 #include "../Includes/Point.hpp"
 
 Point::Point(const float xPoint, const float yPoint) : x(xPoint), y(yPoint) {
-
 }
 
 Point::Point(const Point &other) {
     this->y = other.y;
-    // both of them are Fixed objects so copy assignemt operator will be called
     this->x = other.x; 
 }
 
@@ -26,5 +24,6 @@ float Point::getY() const {
     return y.toFloat();
 }
 
-Point::~Point() { }
+Point::~Point() {
+}
 

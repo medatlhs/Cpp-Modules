@@ -15,7 +15,7 @@ public:
     ~Fixed();
 
     Fixed&  operator=(const Fixed&oldObj);
-    
+
     friend std::ostream& operator<<(std::ostream& out, const Fixed &obj);
 
     int toInt( void ) const;
