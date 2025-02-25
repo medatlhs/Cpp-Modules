@@ -24,3 +24,12 @@ public:
     int getRawBits( void ) const;
     void setRawBits( int const raw );
 };
+
+/*
+
+class obj;
+
+obj << std::cout;
+std::cout << obj;
+
+*/
