@@ -1,4 +1,4 @@
-#include "../Includes/ScavTrap.hpp"
+#include "../Includes/FragTrap.hpp"
 
 int main(void)
 {
@@ -6,7 +6,7 @@ int main(void)
 	ClapTrap clap("Clappy");
 
 	std::cout << "-------------Creating ScavTrap-------------" << std::endl;
-	ScavTrap scav("Scavvy");
+	FragTrap scav("Scavvy");
 
 	std::cout << "-------------actions-----------------------" << std::endl;
 	clap.attack("Enemy");
@@ -14,7 +14,7 @@ int main(void)
 	scav.attack("Enemy");
 	scav.takeDamage(30);
 	scav.beRepaired(20);
-	scav.guardGate();
+	scav.highFivesGuys();
 
 	std::cout << "--------------Destructors-------------------" << std::endl;
 
