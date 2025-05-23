@@ -1,35 +1,28 @@
-#include "../Includes/ScavTrap.hpp"
+#include "./ScavTrap.hpp"
 
-ScavTrap::ScavTrap::ScavTrap() : ClapTrap() {
+ScavTrap::ScavTrap() : ClapTrap() {
     this->hitPoints = 100;
     this->energyPoints = 50;
-    this->attackDamage = 10;
+    this->attackDamage = 20;
     std::cout << "ScavTrap ->  default constructor called" << std::endl;
 }
 
 ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name) {
     this->hitPoints = 100;
     this->energyPoints = 50;
-    this->attackDamage = 10;
+    this->attackDamage = 20;
     std::cout << "ScavTrap ->  parametrized constructor called" << std::endl;
 }
 
-ScavTrap::ScavTrap(const ScavTrap& other) {
+ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other) {
     std::cout << "ScavTrap ->  copy constructor called" << std::endl;
-    this->name = other.name;
-    this->hitPoints = other.hitPoints;
-    this->energyPoints = other.energyPoints;
-    this->attackDamage = other.attackDamage;
 }
 
 ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
     std::cout << "ScavTrap ->  assignment operator called" << std::endl;
-    if (this != &other) {
-        this->name = other.name;
-        this->hitPoints = other.hitPoints;
-        this->energyPoints = other.energyPoints;
-        this->attackDamage = other.attackDamage;
-    }
+    if (this == &other )
+        return *this;
+    ClapTrap::operator=(other);
     return *this;
 }
 

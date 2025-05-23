@@ -1,5 +1,5 @@
-SRC = $(shell find ./source/ -name '*.cpp')
-INC = $(shell find ./Includes/ -name '*.hpp')
+SRC = $(shell find ./ -name '*.cpp')
+INC = $(shell find ./ -name '*.hpp')
 OBJ = $(SRC:.cpp=.o)
 CC = c++
 RM = rm -f

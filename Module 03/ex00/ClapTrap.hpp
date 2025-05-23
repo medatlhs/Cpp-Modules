@@ -14,7 +14,7 @@ private:
 
 public:
     ClapTrap();
-    ClapTrap(std::string &name); // need to be a refrence!!!!
+    ClapTrap(const std::string &name);
     ClapTrap(const ClapTrap& other);
     ClapTrap& operator=(const ClapTrap& other);
     ~ClapTrap();
