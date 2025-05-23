@@ -1,10 +1,10 @@
-#include "../Includes/FragTrap.hpp"
+#include "./FragTrap.hpp"
 
 FragTrap::FragTrap() : ClapTrap() {
     this->hitPoints = 100;
     this->energyPoints = 100;
     this->attackDamage = 30;
-     std::cout << "FragTrap ->  default constructor called" << std::endl;
+    std::cout << "FragTrap ->  default constructor called" << std::endl;
 }
 
 FragTrap::FragTrap(const std::string& name) : ClapTrap(name) {
@@ -14,11 +14,7 @@ FragTrap::FragTrap(const std::string& name) : ClapTrap(name) {
     std::cout << "FragTrap ->  parametrized constructor called" << std::endl;
 }
 
-FragTrap::FragTrap(const FragTrap& other) {
-    this->name = other.name;
-    this->hitPoints = other.hitPoints;
-    this->energyPoints = other.energyPoints;
-    this->attackDamage = other.attackDamage;
+FragTrap::FragTrap(const FragTrap& other) : ClapTrap(other) {
     std::cout << "FragTrap ->  copy constructor called" << std::endl;
 }
 
@@ -29,8 +25,8 @@ FragTrap& FragTrap::operator=(const FragTrap& other) {
         this->energyPoints = other.energyPoints;
         this->attackDamage = other.attackDamage;
     }
-     std::cout << "FragTrap ->  assignment operator called" << std::endl;
-     return *this;
+    std::cout << "FragTrap ->  assignment operator called" << std::endl;
+    return *this;
 }
 
 FragTrap::~FragTrap() {
@@ -48,5 +44,5 @@ void FragTrap::attack(const std::string &target) {
 }
 
 void FragTrap::highFivesGuys(void) {
-    std::cout << "FragTrap ->  " << this->name << " wants a hig five 🖐️" << std::endl;
+    std::cout << "FragTrap ->  " << this->name << " wants a high five 🖐️" << std::endl;
 }
