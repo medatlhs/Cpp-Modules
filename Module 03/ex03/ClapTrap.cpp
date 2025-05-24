@@ -4,7 +4,7 @@ ClapTrap::ClapTrap() : name("default"), hitPoints(10), energyPoints(10), attackD
     std::cout << "claptrap ->  default constructor called\n";
 }
 
-ClapTrap::ClapTrap(const std::string &name) : name(name), hitPoints(10), energyPoints(10), attackDamage(0) {
+ClapTrap::ClapTrap(const std::string &_name) : name(_name), hitPoints(10), energyPoints(10), attackDamage(0) {
     std::cout << "claptrap ->  parameterized constructor called\n";
 }
 
