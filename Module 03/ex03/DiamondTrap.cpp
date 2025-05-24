@@ -7,7 +7,7 @@ DiamondTrap::DiamondTrap() : name("default_") {
     this->attackDamage = FragTrap::attack_damage_;
 }
 
-DiamondTrap::DiamondTrap(const std::string &name) : ClapTrap(name + "_clap_name"), name(name) {
+DiamondTrap::DiamondTrap(const std::string &_name) : ClapTrap(_name + "_clap_name"), name(_name) {
     std::cout << "DimaondTrap ->  parameterized constructor called\n";
     this->hitPoints = FragTrap::hit_points_;
     this->energyPoints = ScavTrap::energy_points_;
