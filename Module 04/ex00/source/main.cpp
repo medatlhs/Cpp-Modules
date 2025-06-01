@@ -1,36 +1,41 @@
 #include "../Inc/Animal.hpp"
 #include "../Inc/Cat.hpp"
 #include "../Inc/Dog.hpp"
-
-// int main(int argc, char const *argv[])
-// {
-//     const Animal *animal = new Cat;
-//     animal->makeSound();
-//     delete animal;
-    
-//     // Cat zoro;
-//     // zoro.makeSound();
-
-//     Dog riko;
-//     riko.makeSound();
-
-//     return 0;
-// }
+#include "../Inc/WrongAnimal.hpp"
+#include "../Inc/WrongCat.hpp"
 
 int main()
 {
-    // const Animal* meta = new Animal();
-    const Animal* j = new Dog();
-    // const Animal* i = new Cat();
-    // // std::cout << j->getType() << " " << std::endl;
-    // // std::cout << i->getType() << " " << std::endl;
-    // i->makeSound(); // will output the cat sound!
-    // j->makeSound();
-    // meta->makeSound();
+    std::cout << "\n--------- [Creating Base Animal] --------- \n";
+    const Animal* animal_1 = new Animal;
+    std::cout << "Animal -> type: " << animal_1->getType() << std::endl;
+    animal_1->makeSound();
+    delete animal_1;
 
-    // delete meta;
-    delete j;
-    // delete i;
+    std::cout << "\n--------- [Creating Cat via Animal pointer] ---------\n";
+    const Animal* animal_2 = new Cat;
+    std::cout << "Cat -> type: " << animal_2->getType() << std::endl;
+    animal_2->makeSound();
+    delete animal_2;
+
+    std::cout << "\n--------- [Creating Dog via Animal pointer] ---------\n";
+    const Animal* animal_3 = new Dog;
+    std::cout << "Dog -> type: " << animal_3->getType() << std::endl;
+    animal_3->makeSound();
+    delete animal_3;
+
+    std::cout << "\n--------- [Creating Base WrongAnimal] ---------\n";
+    const WrongAnimal* animal_4 = new WrongAnimal;
+    std::cout << "WrongAnimal -> type: " << animal_4->getType() << std::endl;
+    animal_4->makeSound();
+    delete animal_4;
+
+    std::cout << "\n--------- [Creating WrongCat via WrongAnimal pointer] ---------\n";
+    const WrongAnimal* animal_5 = new WrongCat;
+    std::cout << "WrongCat -> type: " << animal_5->getType() << std::endl;
+    animal_5->makeSound();
+    delete animal_5;
+
     return 0;
 }
 
@@ -45,6 +50,7 @@ so if we wanna access child class members we need to mark virtual
 to the methods in base class that we wanna override.
 
 * const pointer can't access none const methods
-
+* we need to mark the base destrcutor as virtual oherwise the child class 
+    destructor wont be called
 
 */

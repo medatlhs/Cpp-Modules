@@ -2,23 +2,23 @@
 
 Cat::Cat() {
     std::cout << "Cat -> default constructor called\n";
-    this->type = "zoro_cat";
+    this->type_ = "Cat";
 }
 
-Cat::Cat(const Cat &copy) {
+Cat::Cat(const Cat &copy) : Animal(copy) {
     std::cout << "Cat -> copy constructor called\n";
-    this->type = copy.type;
+    this->type_ = copy.type_;
 }
 
 Cat& Cat::operator=(const Cat &copy) {
     std::cout << "Cat -> assignment constructor called\n";
     if (this != &copy)
-        this->type = copy.type;
+        this->type_ = copy.type_;
     return *this;
 }
 
 void Cat::makeSound() const{
-    std::cout << "Cat -> saying wsup man\n";
+    std::cout << "Cat -> is meowing\n";
 }
 
 Cat::~Cat() {
