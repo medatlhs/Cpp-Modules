@@ -6,7 +6,7 @@
 
 int main()
 {
-    std::cout << "\n--------- [Creating Base Animal] --------- \n";
+    std::cout << "--------- [Creating Base Animal] --------- \n";
     const Animal* animal_1 = new Animal;
     std::cout << "Animal -> type: " << animal_1->getType() << std::endl;
     animal_1->makeSound();
