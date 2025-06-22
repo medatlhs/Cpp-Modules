@@ -41,17 +41,3 @@ int main()
     return 0;
 }
 
-
-
-/*
-when we inherit from a base class the child class gets the base class 
-members and when we use a base class pointer to the child class that
-pointer is only pointing to he is part (base),
-so if we wanna access child class members we need to mark virtual
-to the methods in base class that we wanna override.
-
-* const pointer can't access none const methods
-* we need to mark the base destrcutor as virtual oherwise the child class 
-    destructor wont be called
-
-*/

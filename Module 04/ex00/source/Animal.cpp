@@ -10,7 +10,7 @@ Animal::Animal(const Animal &copy) {
 }
 
 Animal& Animal::operator=(const Animal &copy) {
-    std::cout << "Animal -> assign,ent constructor called\n";
+    std::cout << "Animal -> assignment constructor called\n";
     if (this != &copy)
         this->type_ = copy.type_;
     return *this;
