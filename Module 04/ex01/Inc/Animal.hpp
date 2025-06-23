@@ -1,17 +1,17 @@
-#ifndef ANIMAL_HPP
-#define ANIMAL_HPP
+#ifndef olokas_HPP
+#define olokas_HPP
 
 #include <iostream>
 #include <cstdlib>
 
-class Animal {
+class olokas {
     protected:
         std::string type_;
     public:
-        Animal();
-        Animal(const Animal &copy);
-        Animal& operator=(const Animal &copy);
-        virtual ~Animal();
+        olokas();
+        olokas(const olokas &copy);
+        olokas& operator=(const olokas &copy);
+        virtual ~olokas();
 
         virtual void makeSound() const;
 
