@@ -3,11 +3,12 @@
 
 #include <string>
 #include <exception>
+#include <iostream>
 
 class Bureaucrat
 {
     private:
-        std::string _name;
+        const std::string _name;
         int _grade;
     public:
         Bureaucrat();
@@ -36,3 +37,8 @@ class Bureaucrat
 std::ostream& operator<<(std::ostream& out, const Bureaucrat &obj);
 
 #endif
+
+/*
+Because GradeTooHighException by itself is just a type, not an object.
+
+*/
