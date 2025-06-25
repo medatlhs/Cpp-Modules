@@ -1,16 +1,23 @@
 #include "Form.hpp"
-
-Form::Form() 
-    : _name("default"), _isSigned(false), _signGrade(150), _execGrade(150) { }
+#include "Bureaucrat.hpp"
+Form::Form() : _name("default"), _isSigned(false), _signGrade(150), _execGrade(150) 
+{ 
+}
 
 Form::Form(std::string name, int signGrade, int execGrade)
-    : _name(name), _isSigned(false), _signGrade(signGrade), _execGrade(execGrade)  {}
+    : _name(name), _isSigned(false), _signGrade(signGrade), _execGrade(execGrade)
+{
+    if (signGrade > 150 || execGrade > 150)
+        throw GradeTooLowException();
+    else if (signGrade < 1 || execGrade < 1)
+        throw GradeTooHighException();
+}
 
 Form::Form(const Form &copy)
-: _name(copy.get_Name()), _isSigned(false),
-  _signGrade(copy.get_SignGrade()),
-  _execGrade(copy.get_ExecGrade())
+    : _name(copy.get_Name()), _isSigned(false), 
+      _signGrade(copy.get_SignGrade()), _execGrade(copy.get_ExecGrade())
 {
+
 }
 
 Form& Form::operator=(const Form& other) {
@@ -23,10 +30,18 @@ Form& Form::operator=(const Form& other) {
 Form::~Form() {}
 
 void Form::besigned(Bureaucrat &b) {
-    if (b.getGrade() <= this->_signGrade)
+    if (b.getGrade() <= this->_signGrade) {
         this->_isSigned = true;
-    else
+        std::cout << "Form >> " << "bureaucrat: " << b.getName()
+                  << " sucessfully signed " << this->_name
+                  << std::endl;
+    }
+    else {
+        std::cout << "Form >> " << "bureaucrat: " << b.getName()
+                  << " coudn't sign " << this->_name
+                  << std::endl;
         throw GradeTooLowException();
+    }
 }
 
 std::string Form::get_Name() const {
@@ -46,9 +61,18 @@ int Form::get_ExecGrade() const {
 }
 
 const char* Form::GradeTooHighException::what() const throw() {
-    return "Grade Too High !\n";
+    return "Form >> Grade Too High!";
 }
 
 const char* Form::GradeTooLowException::what() const throw() {
-    return "Grade Too Low !\n";
+    return "Form >> Grade Too Low!";
+}
+
+std::ostream& operator<<(std::ostream& out, Form& myobj) {
+    std::cout << "Form >> " << myobj.get_Name() 
+              << ", is signed: " << (myobj.check_Ifsigned() == 1 ? "true" : "false")
+              << ", to sign grade: " << myobj.get_ExecGrade()
+              << ", execution grade: " << myobj.get_ExecGrade()
+              << std::endl;
+    return out;
 }
