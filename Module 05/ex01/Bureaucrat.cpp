@@ -27,6 +27,10 @@ std::string Bureaucrat::getName() const {
     return _name;
 }
 
+void Bureaucrat::signForm(Form &f) {
+    f.besigned(*this);
+}
+
 int Bureaucrat::getGrade() const {
     return _grade;
 }
@@ -44,15 +48,15 @@ void Bureaucrat::decrement() {
 }
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat &obj) {
-    out << obj.getName() << ", bureaucrat grade " 
+    out << "Bureaucrat >> " << "name: " << obj.getName() << ", grade: " 
         << obj.getGrade() << std::endl;
     return out;
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw(){
-    return "Grade too high!\n";
+    return "Bureaucrat >> Grade too high!";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw(){
-    return "Grade too low!\n";
+    return "Bureaucrat >> Grade too low!";
 }

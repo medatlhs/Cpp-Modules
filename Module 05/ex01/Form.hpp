@@ -6,6 +6,8 @@
 #include <iostream>
 #include <exception>
 
+class Bureaucrat;
+
 class Form
 {
     private:
@@ -39,5 +41,7 @@ class Form
                 const char* what() const throw();
         };
 };
+
+std::ostream& operator<<(std::ostream& out, Form& myobj);
 
 #endif
