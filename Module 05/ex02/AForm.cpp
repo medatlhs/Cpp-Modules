@@ -1,5 +1,5 @@
-#include "AForm.hpp"
-#include "Bureaucrat.hpp"
+#include "./Includes/AForm.hpp"
+#include "./Includes/Bureaucrat.hpp"
 
 AForm::AForm() : _name("default"), _isSigned(false), _signGrade(150), _execGrade(150) 
 { 
@@ -34,8 +34,7 @@ void AForm::besigned(Bureaucrat &b) {
     if (b.getGrade() <= this->_signGrade) {
         this->_isSigned = true;
         std::cout << "AForm >> "<< b.getName()
-                  << " signed " << this->_name
-                  << "  --sucessfully signed"<< std::endl;
+                  << " signed " << this->_name << std::endl;
     }
     else {
         std::cout << "AForm >> " << b.getName()
@@ -74,11 +73,11 @@ int AForm::get_ExecGrade() const {
 }
 
 const char* AForm::GradeTooHighException::what() const throw() {
-    return "AForm exc >> Grade Too High!";
+    return "AForm exc >> Bureaucrat Grade Too High!";
 }
 
 const char* AForm::GradeTooLowException::what() const throw() {
-    return "AForm exc >> Grade Too Low!";
+    return "AForm exc >> Bureaucrat Grade Too Low!";
 }
 
 const char* AForm::FormNotSignedException::what() const throw() {
@@ -87,7 +86,7 @@ const char* AForm::FormNotSignedException::what() const throw() {
 
 std::ostream& operator<<(std::ostream& out, AForm& myobj) {
     std::cout << "AForm >> " << myobj.get_Name() 
-              << ", is signed: " << (myobj.check_Ifsigned() == 1 ? "true" : "false")
+              << " info: signed: " << (myobj.check_Ifsigned() == 1 ? "true" : "false")
               << ", to sign grade: " << myobj.get_SignGrade()
               << ", execution grade: " << myobj.get_ExecGrade()
               << std::endl;
