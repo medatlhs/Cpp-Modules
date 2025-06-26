@@ -1,7 +1,7 @@
-#include "PresidentialPardonForm.hpp"
+#include "./Includes/PresidentialPardonForm.hpp"
 
 PresidentialPardonForm::PresidentialPardonForm()
-    : AForm::AForm("PresidentialPardonForm", 25, 5),_target("default") { }
+    : AForm::AForm("PresidentialPardonForm", 25, 5),_target("default_target") { }
 
 PresidentialPardonForm::PresidentialPardonForm(const std::string &target)
     : AForm::AForm("PresidentialPardonForm", 25, 5),_target(target) { }
