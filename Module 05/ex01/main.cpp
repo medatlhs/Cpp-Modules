@@ -22,7 +22,7 @@ int main() {
 		std::cout << "-- bureaucratB signing formY (grade 1 == 1) --\n";
 		bureaucratB.signForm(formY);
 
-		std::cout << "\n-- bureaucratA signing formX (grade 50 < 45) --> fails --\n";
+		std::cout << "\n-- bureaucratA signing formX (grade 50 < 45) -- fails --\n";
 		bureaucratA.signForm(formX);
 
 		std::cout << "-- forms after signing --\n";
