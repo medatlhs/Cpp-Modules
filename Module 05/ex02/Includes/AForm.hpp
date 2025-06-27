@@ -21,7 +21,7 @@ class AForm
         AForm(std::string name, int signGrade, int execGrade);
         AForm(const AForm &copy);
         AForm& operator= (const AForm &other);
-        ~AForm();
+        virtual ~AForm();
         
         void besigned(Bureaucrat &b);
         void checkAndExecute(Bureaucrat const &executor) const;

@@ -2,35 +2,50 @@
 #include "./Includes/Bureaucrat.hpp"
 #include "./Includes/PresidentialPardonForm.hpp"
 #include "./Includes/ShrubberyCreationForm.hpp"
+#include "./Includes/RobotomyRequestForm.hpp"
 #include <iostream>
-#include <cstdlib>
+
 
 int main()
 {
     try {
-        Bureaucrat bureaucrat_A("bureaucrat_A", 150);
-        PresidentialPardonForm form_A("oussamaBeladen");
+        Bureaucrat bureaucratA("bureaucratA", 150);
+        PresidentialPardonForm pardonF("mojrim");
 
-        std::cout << form_A;
-        form_A.besigned(bureaucrat_A);
-        bureaucrat_A.executeForm(form_A);
+        std::cout << pardonF;
+
+        pardonF.besigned(bureaucratA);
+        bureaucratA.executeForm(pardonF);
     }
     catch(const std::exception& e) {
-        std::cerr << "Error: " << e.what() << '\n';
+        std::cerr << "Exception: " << e.what() << '\n';
     }
 
     try {
-        Bureaucrat Bureaucrat_A("Bure", 150);
-        ShrubberyCreationForm ShrubberyCreationForm_A("zoo");
+        Bureaucrat bureaucratB("bureaucratB", 144);
+        ShrubberyCreationForm shrubberyCreatingF("theZoo");
 
-        ShrubberyCreationForm_A.besigned(Bureaucrat_A);
-        ShrubberyCreationForm_A.checkAndExecute(Bureaucrat_A);
-    }
+        std::cout << shrubberyCreatingF;
+
+        shrubberyCreatingF.besigned(bureaucratB);
+        shrubberyCreatingF.checkAndExecute(bureaucratB);
+    } 
     catch(const std::exception& e) {
-        std::cerr << "Error: " << e.what() << '\n';
+        std::cerr << "Exception: " << e.what() << '\n';
     }
     
-    srand(time(NULL));
-    std::cout << rand();
+    try
+    {
+        Bureaucrat bureaucratC("bureaucratC", 46);
+        RobotomyRequestForm robotmizeF("cat");
+
+        std::cout << robotmizeF;
+        bureaucratC.signForm(robotmizeF);
+        bureaucratC.executeForm(robotmizeF);
+    }
+    catch(const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << '\n';
+    }
+
     return 0;
 }
