@@ -33,11 +33,10 @@ AForm::~AForm() {}
 void AForm::besigned(Bureaucrat &b) {
     if (b.getGrade() <= this->_signGrade) {
         this->_isSigned = true;
-        std::cout << "AForm >> "<< b.getName()
-                  << " signed " << this->_name << std::endl;
+        std::cout << b.getName() << " signed " << this->_name << std::endl;
     }
     else {
-        std::cout << "AForm >> " << b.getName()
+        std::cout << b.getName()
                   << " coudn't sign " << this->_name
                   << std::endl;
         throw GradeTooLowException();
@@ -46,11 +45,11 @@ void AForm::besigned(Bureaucrat &b) {
 
 void AForm::checkAndExecute(Bureaucrat const &executor) const {
     if (!this->_isSigned) {
-        std::cout << "AForm >> can't execute " << this->_name << ", Form not signed.\n";
+        std::cout << "can't execute " << this->_name << ", Form not signed.\n";
         throw FormNotSignedException();
     }
     else if (executor.getGrade() > this->_execGrade) {
-        std::cout << "AForm >> bureaucrat can't execute " << this->_name << std::endl;
+        std::cout << "bureaucrat can't execute " << this->_name << std::endl;
         throw GradeTooLowException();
     }
     this->execute(executor);
@@ -73,19 +72,19 @@ int AForm::get_ExecGrade() const {
 }
 
 const char* AForm::GradeTooHighException::what() const throw() {
-    return "AForm exc >> Bureaucrat Grade Too High!";
+    return "Bureaucrat Grade Too High!";
 }
 
 const char* AForm::GradeTooLowException::what() const throw() {
-    return "AForm exc >> Bureaucrat Grade Too Low!";
+    return "Bureaucrat Grade Too Low!";
 }
 
 const char* AForm::FormNotSignedException::what() const throw() {
-    return "AForm exc >> Form not signed!";
+    return "Form not signed!";
 }
 
 std::ostream& operator<<(std::ostream& out, AForm& myobj) {
-    std::cout << "AForm >> " << myobj.get_Name() 
+    std::cout << "# " << myobj.get_Name() 
               << " info: signed: " << (myobj.check_Ifsigned() == 1 ? "true" : "false")
               << ", to sign grade: " << myobj.get_SignGrade()
               << ", execution grade: " << myobj.get_ExecGrade()

@@ -42,8 +42,3 @@ class Bureaucrat
 std::ostream& operator<<(std::ostream& out, const Bureaucrat &obj);
 
 #endif
-
-/*
-Because GradeTooHighException by itself is just a type, not an object.
-
-*/
