@@ -1,6 +1,6 @@
 #include "./Includes/Intern.hpp"
 
-Intern::Intern() { 
+Intern::Intern() {
 }
 
 Intern::Intern(const Intern &other) {
@@ -34,7 +34,7 @@ AForm* Intern::makeForm(const std::string &form_name, const std::string &form_ta
         {"robotomy request", "presidential pardon", "shrubbery creation"};
     AForm* (*makers[])(const std::string &target) = 
         { makeRobotomyRequest, makePresidentialPardonForm, makeShrubberyCreation };
-    
+
     int size = sizeof(makers) / sizeof(makers[0]);
     for(int i = 0; i < size; i++) {
         if (form_name == form_names[i]) {
@@ -43,5 +43,4 @@ AForm* Intern::makeForm(const std::string &form_name, const std::string &form_ta
         }
     }
     throw std::invalid_argument("Bad args: Form name does not exist!");
-    return NULL;
 }

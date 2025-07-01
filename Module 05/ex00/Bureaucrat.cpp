@@ -1,9 +1,8 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(): _name("default"), _grade(150) {}
+Bureaucrat::Bureaucrat(): _name("someBureaucrat"), _grade(150) { }
 
-Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
-{
+Bureaucrat::Bureaucrat(const std::string &name, int grade) : _name(name) {
     if (grade < 1)
         throw GradeTooHighException();
     else if (grade > 150)
@@ -11,8 +10,7 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
     this->_grade = grade;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &copy) 
-    : _name(copy._name), _grade(copy._grade) {}
+Bureaucrat::Bureaucrat(const Bureaucrat &copy) : _name(copy._name), _grade(copy._grade) { }
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {
     if (this == &other)
@@ -21,7 +19,7 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {
     return *this;
 }
 
-Bureaucrat::~Bureaucrat() {}
+Bureaucrat::~Bureaucrat() { }
 
 std::string Bureaucrat::getName() const {
     return _name;
@@ -44,15 +42,15 @@ void Bureaucrat::decrement() {
 }
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat &obj) {
-    out << obj.getName() << ", bureaucrat grade " 
-        << obj.getGrade() << std::endl;
+    out << "Bureaucrat name: " << obj.getName()
+        << "; Bureaucrat grade: " << obj.getGrade() << std::endl;
     return out;
 }
 
-const char* Bureaucrat::GradeTooHighException::what() const throw(){
+const char* Bureaucrat::GradeTooHighException::what() const throw() {
     return "Grade too high!\n";
 }
 
-const char* Bureaucrat::GradeTooLowException::what() const throw(){
+const char* Bureaucrat::GradeTooLowException::what() const throw() {
     return "Grade too low!\n";
 }

@@ -10,9 +10,10 @@ class Bureaucrat
     private:
         const std::string _name;
         int _grade;
+
     public:
         Bureaucrat();
-        Bureaucrat(std::string name, int grade);
+        Bureaucrat(const std::string &name, int grade);
         Bureaucrat(const Bureaucrat& copy);
         Bureaucrat& operator= (const Bureaucrat& other);
         ~Bureaucrat();
@@ -37,8 +38,3 @@ class Bureaucrat
 std::ostream& operator<<(std::ostream& out, const Bureaucrat &obj);
 
 #endif
-
-/*
-Because GradeTooHighException by itself is just a type, not an object.
-
-*/
