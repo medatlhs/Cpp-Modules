@@ -22,7 +22,7 @@ class AForm
         AForm(const AForm &copy);
         AForm& operator= (const AForm &other);
         virtual ~AForm();
-        
+
         void besigned(Bureaucrat &b);
         void checkAndExecute(Bureaucrat const &executor) const;
         virtual void execute(Bureaucrat const &executor) const = 0;

@@ -1,9 +1,7 @@
 #include "./Includes/AForm.hpp"
 #include "./Includes/Bureaucrat.hpp"
 
-AForm::AForm() : _name("default"), _isSigned(false), _signGrade(150), _execGrade(150) 
-{ 
-}
+AForm::AForm() : _name("someForm"), _isSigned(false), _signGrade(150), _execGrade(150) { }
 
 AForm::AForm(std::string name, int signGrade, int execGrade)
     : _name(name), _isSigned(false), _signGrade(signGrade), _execGrade(execGrade)
@@ -15,11 +13,8 @@ AForm::AForm(std::string name, int signGrade, int execGrade)
 }
 
 AForm::AForm(const AForm &copy)
-    : _name(copy.get_Name()), _isSigned(false), 
-      _signGrade(copy.get_SignGrade()), _execGrade(copy.get_ExecGrade())
-{
-
-}
+    : _name(copy.get_Name()), _isSigned(false), _signGrade(copy.get_SignGrade()), _execGrade(copy.get_ExecGrade()) 
+{ }
 
 AForm& AForm::operator=(const AForm& other) {
     if (this == &other)
@@ -28,17 +23,14 @@ AForm& AForm::operator=(const AForm& other) {
     return *this;
 }
 
-AForm::~AForm() {}
+AForm::~AForm() { }
 
 void AForm::besigned(Bureaucrat &b) {
     if (b.getGrade() <= this->_signGrade) {
         this->_isSigned = true;
         std::cout << b.getName() << " signed " << this->_name << std::endl;
-    }
-    else {
-        std::cout << b.getName()
-                  << " coudn't sign " << this->_name
-                  << std::endl;
+    } else {
+        std::cout << b.getName()<< " coudn't sign " << this->_name << std::endl;
         throw GradeTooLowException();
     }
 }

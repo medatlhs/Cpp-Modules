@@ -1,8 +1,7 @@
 #include "Form.hpp"
 #include "Bureaucrat.hpp"
-Form::Form() : _name("default"), _isSigned(false), _signGrade(150), _execGrade(150) 
-{ 
-}
+
+Form::Form() : _name("someForm"), _isSigned(false), _signGrade(150), _execGrade(150) { }
 
 Form::Form(std::string name, int signGrade, int execGrade)
     : _name(name), _isSigned(false), _signGrade(signGrade), _execGrade(execGrade)
@@ -13,12 +12,8 @@ Form::Form(std::string name, int signGrade, int execGrade)
         throw GradeTooHighException();
 }
 
-Form::Form(const Form &copy)
-    : _name(copy.get_Name()), _isSigned(false), 
-      _signGrade(copy.get_SignGrade()), _execGrade(copy.get_ExecGrade())
-{
-
-}
+Form::Form(const Form &copy): 
+    _name(copy.get_Name()), _isSigned(false),  _signGrade(copy.get_SignGrade()), _execGrade(copy.get_ExecGrade()) { }
 
 Form& Form::operator=(const Form& other) {
     if (this == &other)
@@ -27,17 +22,17 @@ Form& Form::operator=(const Form& other) {
     return *this;
 }
 
-Form::~Form() {}
+Form::~Form() { }
 
-void Form::besigned(Bureaucrat &b) {
+void Form::beSigned(Bureaucrat &b) {
     if (b.getGrade() <= this->_signGrade) {
         this->_isSigned = true;
-        std::cout << "Form >> " << "bureaucrat: " << b.getName()
+        std::cout << "Form >> " << "Bureaucrat: " << b.getName()
                   << " sucessfully signed " << this->_name
                   << std::endl;
     }
     else {
-        std::cout << "Form >> " << "bureaucrat: " << b.getName()
+        std::cout << "Form >> " << "Bureaucrat: " << b.getName()
                   << " coudn't sign " << this->_name
                   << std::endl;
         throw GradeTooLowException();
@@ -70,9 +65,9 @@ const char* Form::GradeTooLowException::what() const throw() {
 
 std::ostream& operator<<(std::ostream& out, Form& myobj) {
     std::cout << "Form >> " << myobj.get_Name() 
-              << ", is signed: " << (myobj.check_Ifsigned() == 1 ? "true" : "false")
-              << ", to sign grade: " << myobj.get_SignGrade()
-              << ", execution grade: " << myobj.get_ExecGrade()
+              << "; is signed: " << (myobj.check_Ifsigned() == 1 ? "true" : "false")
+              << "; to sign grade: " << myobj.get_SignGrade()
+              << "; execution grade: " << myobj.get_ExecGrade()
               << std::endl;
     return out;
 }

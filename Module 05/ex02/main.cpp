@@ -10,7 +10,7 @@ int main()
 {
     try {
         Bureaucrat bureaucratA("bureaucratA", 150);
-        PresidentialPardonForm pardonF("mojrim");
+        PresidentialPardonForm pardonF("prisoner");
 
         std::cout << pardonF;
 
@@ -18,12 +18,12 @@ int main()
         bureaucratA.executeForm(pardonF);
     }
     catch(const std::exception& e) {
-        std::cerr << "Exception: " << e.what() << '\n';
+        std::cout << "Exception: " << e.what() << '\n';
     }
 
     try {
-        Bureaucrat bureaucratB("bureaucratB", 144);
-        ShrubberyCreationForm shrubberyCreatingF("theZoo");
+        Bureaucrat bureaucratB("bureaucratB", 1);
+        ShrubberyCreationForm shrubberyCreatingF("garden");
 
         std::cout << shrubberyCreatingF;
 
@@ -31,7 +31,7 @@ int main()
         shrubberyCreatingF.checkAndExecute(bureaucratB);
     } 
     catch(const std::exception& e) {
-        std::cerr << "Exception: " << e.what() << '\n';
+        std::cout << "Exception: " << e.what() << '\n';
     }
     
     try
@@ -44,7 +44,7 @@ int main()
         bureaucratC.executeForm(robotmizeF);
     }
     catch(const std::exception& e) {
-        std::cerr << "Exception: " << e.what() << '\n';
+        std::cout << "Exception: " << e.what() << '\n';
     }
 
     return 0;

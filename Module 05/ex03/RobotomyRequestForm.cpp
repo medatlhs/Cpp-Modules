@@ -21,6 +21,7 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &o
 }
 
 RobotomyRequestForm::~RobotomyRequestForm() {
+    // std::cout << "destrcutor got called\n";
 }
 
 void RobotomyRequestForm::execute(Bureaucrat const &executor) const {
@@ -28,8 +29,12 @@ void RobotomyRequestForm::execute(Bureaucrat const &executor) const {
     std::cout << "RobotomyRequestForm >> robotomizing " << this->_target << " : ZzZZZzzzzzzzzzzzz\n";
 
     std::srand(time(0));
-    if (std::rand()%2==1)
+    if (std::rand()%2)
         std::cout << "RobotomyRequestForm >> " <<  "Robotomizing " << this->_target << " succeed!\n";
     else
         std::cout << "RobotomyRequestForm >> " <<  "Robotomizing " << this->_target << " Failed!\n";
+
+    std::cout << "RobotomyRequestForm >> " << executor.getName() << " sucessfully executed " 
+        << this->get_Name() <<  std::endl;
 }
+

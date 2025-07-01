@@ -25,17 +25,25 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
     std::string fileName = this->_target + "_shrubbery";
     std::ofstream outfile(fileName.c_str());
 
-    if (!outfile.is_open())
+    if (!outfile.is_open()) {
         throw std::runtime_error("ShrubberyCreationForm >> Error opening outfile!");
+    }
     
-    outfile << "\n\t   ^   \n";
-    outfile << "\t  /|\\  \n";
-    outfile << "\t /_|_\\ \n";
-    outfile << "\t   |   \n";
-    outfile << "\t  / \\  \n";
-    outfile.close();
+    outfile << "       v\n";
+    outfile << "      >X<\n";
+    outfile << "       A\n";
+    outfile << "      d$b\n";
+    outfile << "    .d\\$$b.\n";
+    outfile << "  .d$i$$\\$$b.\n";
+    outfile << "     d$$@b\n";
+    outfile << "    d\\$$$ib\n";
+    outfile << "  .d$$$\\$$$b\n";
+    outfile << ".d$$@$$$$\\$$ib.\n";
+    outfile << "      ###\n";
+    outfile << "      ###\n";
+    outfile << "      ###\n";
 
-    std::cout << "ShrubberyCreationForm >> "
-              << executor.getName() << " sucessfully executed "
+    outfile.close();
+    std::cout << "ShrubberyCreationForm >> " << executor.getName() << " sucessfully executed " 
               << this->get_Name() <<  std::endl;
 }
