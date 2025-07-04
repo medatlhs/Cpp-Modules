@@ -5,13 +5,12 @@ int main() {
 
     std::cout << "--- Valid Bureaucrat ---" << std::endl;
     try {
-        Bureaucrat b1("BureaucratA", 42);
+        Bureaucrat b1("BureaucratA", 10);
         std::cout << b1;
 
         b1.increment();
         std::cout << "after increment: " << b1;
 
-        b1.decrement();
         b1.decrement();
         std::cout << "after two decrements: " << b1;
         

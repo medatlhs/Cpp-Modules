@@ -1,7 +1,6 @@
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
 
-
 int main() {
 	try {
 		Bureaucrat bureaucratA("bureaucratA", 50);

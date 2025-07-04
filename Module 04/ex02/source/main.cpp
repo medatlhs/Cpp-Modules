@@ -23,7 +23,7 @@ int main()
         animals[i]->makeSound();
     }
 
-    std::cout << "\ntesting deep copy:\n\n";  ////
+    std::cout << "\ntesting deep copy:\n\n";
     Cat cat_a;
     cat_a.setBrainIdea(0, "waah chi frmaja daba\n");
     std::cout << "cat_a idea: " << cat_a.getBrainIdea(0);

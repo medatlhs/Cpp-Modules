@@ -22,7 +22,7 @@ class Form
         Form(const Form &copy);
         Form& operator= (const Form &other);
         ~Form();
-         
+
         void beSigned(Bureaucrat &b);
 
         // getters
