@@ -29,7 +29,7 @@ int main()
 
         shrubberyCreatingF.besigned(bureaucratB);
         shrubberyCreatingF.checkAndExecute(bureaucratB);
-    } 
+    }
     catch(const std::exception& e) {
         std::cout << "Exception: " << e.what() << '\n';
     }

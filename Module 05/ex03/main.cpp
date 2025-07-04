@@ -30,9 +30,9 @@ int main() {
         delete shrubberyForm;
 
         std::cout << "\n--- Testing Invalid Form ---\n";
-        AForm *badForm = someIntern.makeForm("invalid form", "nothing");
+        AForm *invalidForm = someIntern.makeForm("invalid form", "nothing");
         std::cout << "here\n";
-        delete badForm; // will throw
+        delete invalidForm;
 
     } catch (const std::exception &e) {
         std::cerr << "Exception: " << e.what() << '\n';

@@ -27,3 +27,33 @@ So the main points are:
     Polymorphism: You can catch them via base class reference or pointer.
 
     Message: what() provides the error details, which you can override in your own exceptions if you make them.
+
+# Definition of Polymorphism (C++)
+Polymorphism in C++ is the ability of a function, object, or operator to behave differently based on the context. More specifically, it allows a base class pointer or reference to refer to objects of derived classes, and invoke the appropriate derived class methods at runtime through dynamic dispatch.
+
+This enables writing flexible and extensible code where the exact behavior depends on the actual object type, not just the pointer or reference type.
+
+Types of Polymorphism in C++
+Compile-time polymorphism (Static polymorphism):
+
+Function overloading
+
+Operator overloading
+
+Templates
+
+Run-time polymorphism (Dynamic polymorphism):
+
+Achieved using virtual functions and inheritance
+
+Allows method overriding
+
+
+# What is an abstract class?
+It’s a class that cannot be instantiated directly.
+
+It’s designed to be a base class for other classes to inherit from.
+
+It usually contains one or more pure virtual functions (in C++), which are functions declared but not implemented in the abstract class.
+
+Subclasses must override (implement) those pure virtual functions to become concrete (instantiable).
