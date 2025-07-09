@@ -1,0 +1,1 @@
+Overflow happens when the result of an operation can't fit into the type's size, so it wraps around.
