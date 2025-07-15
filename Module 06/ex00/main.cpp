@@ -14,7 +14,10 @@ class ScalarConverter {
         static bool isDouble(std::string &input);
         static bool isFloat(std::string &input);
         static bool isSpecialLiteral(std::string &input, bool doubleCheck);
-        static bool checkScNotation(std::string &input);
+        
+        static void handleAsChar(std::string &input);
+
+        static bool validateSienNotation(std::string &input);
         static int  checkSign(std::string &input); 
 
     public:
@@ -23,13 +26,12 @@ class ScalarConverter {
 
 int ScalarConverter::checkSign(std::string &input) {
     int start = 0;
-    if (input[0] == '-' || input[0] == '+') {
+    if (input[0] == '-' || input[0] == '+')
         start = 1;
-    }
     return start;
 }
 
-bool ScalarConverter::checkScNotation(std::string &input) {
+bool ScalarConverter::validateSienNotation(std::string &input) {
     bool sawEflag = false;
     for (int i = 0; i < input.length(); i++) {
         if ((input[i] == '-' || input[i] == '+') && i != 0) {
@@ -51,7 +53,7 @@ bool ScalarConverter::isChar(std::string &input) {
 }
 
 bool ScalarConverter::isInt(std::string &input) {
-    if (!checkScNotation(input))
+    if (!validateSienNotation(input))
         return false;
     int start = checkSign(input);
     for (int i = start; i < input.length(); i++) {
@@ -73,33 +75,53 @@ bool ScalarConverter::isSpecialLiteral(std::string &input, bool doubleCheck) {
     return input == "nanf" ||  input == "+inff" || input == "-inff";
 }
 
-bool ScalarConverter::isDouble(std::string &input) {
-    if (!checkScNotation(input))
-        return false;
-    if (isSpecialLiteral(input, true))
-        true;
+// bool ScalarConverter::isDouble(std::string &input) {
+//     if (!validateSienNotation(input))
+//         return false;
+//     if (isSpecialLiteral(input, true))
+//         return true;
     
-    int start = checkSign(input);
+//     int start = checkSign(input);
+//     bool sawDot = false;
+//     bool sawFSymbol = false;
+//     std::string allowed = "+f-eE";
+//     for (int i = start; i < input.length(); i++) {
+//         char c = input[i];
+//         int pos = allowed.find(c);
+//         if (isdigit(c) || pos == std::string::npos)
+//             continue;
+//         else if (c == '.') {
+//             if (sawDot || !input[i+1]) { return false; }
+//             sawDot = true;
+//         }
+//         return false;
+//     }
+//     return (sawDot ? true : false);
+// }
+
+bool ScalarConverter::isDouble(std::string &input){
+    if(!validateSienNotation(input)) return false;
+    if(isSpecialLiteral(input,true)) return true;
+
     bool sawDot = false;
-    bool sawFSymbol = false;
-    for (int i = start; i < input.length(); i++) {
+    std::string allowed = "eE+-";
+    for(int i = checkSign(input);i < input.length(); i++){
         char c = input[i];
-        if (isdigit(input[i]))
-            continue;
-        else if (input[i] == '.') {
-            if (sawDot || !input[i+1]) { return false; }
+        if(isdigit(c)) continue;
+        else if (c == 'f') return false;
+        else if(c == '.') {
+            if (sawDot || i == input.length()-1) {return false;}
             sawDot = true;
-        } else if (c == 'f' || c == 'e' 
-                || c == 'E' || c == '-' || c == '+') {
-            continue;
-        } else
+        } else if(allowed.find(c) != std::string::npos) continue;
+        else
             return false;
     }
-    return (sawDot ? true : false);
+    return sawDot;
 }
 
+
 bool ScalarConverter::isFloat(std::string &input) {
-    if (!checkScNotation(input))
+    if (!validateSienNotation(input))
         return false;
     if (isSpecialLiteral(input, false))
         return true;
@@ -123,51 +145,43 @@ bool ScalarConverter::isFloat(std::string &input) {
     return (!sawFSymbol ? false : true);
 }
 
+void ScalarConverter::handleAsChar(std::string &input) {
+    std::cout << "CHAR: " << input[0] << std::endl;
+    std::cout << "INT : " << static_cast<int>(input[0]) << std::endl;
+}
+
 void ScalarConverter::convert(std::string input) {
     if (input.empty()) {
         std::cout << "Error: Cant't Convert An Empty String!\n";
         return ;
     }
-
-    // std::cout << "check if int: " <<(isInt(input) ? "true" : "false") << std::endl;
-    // std::cout << "check if Float: " <<(isFloat(input) ? "true" : "false") << std::endl;
-    // std::cout << "check if double: " <<(isDouble(input) ? "true" : "false") << std::endl;
-    // std::cout << "check if char: " <<(isChar(input) ? "true" : "false") << std::endl;
+    bool (*typeCheckers[])(std::string &input) = {isChar, isInt, isDouble, isFloat};
+    for (int i = 0; i < sizeof(typeCheckers) / sizeof(typeCheckers[0]); i++) {
+        if (typeCheckers[i](input)) {
+            std::cout << "#TYPE VALID: OK\n";
+            break ;
+        }
+    }
+    
 
     if (isChar(input)) {
-        std::cout << "# type: CHAR\n";
+        handleAsChar(input);
+    } else if (isInt(input)) {
+        std::cout << "# type: INT\n";
     } else if (isFloat(input)) {
         std::cout << "# type: FLOAT\n";
     } else if (isDouble(input)) {
-        std::cout << "# type: DOUBLE\n";
-    } else if (isInt(input)) {
-        std::cout << "# type: INT\n";
+        std::cout << "# type: Double\n";
     } else
         std::cout << "type: impossible\n";
-    
-    // handle as char
-    /*
-        
-    */
 }
 
-#include <iomanip>
 int main(int argc, char const *argv[])
 {
-    (void)argc;
-    try {
-        std::string input = argv[1];
-        ScalarConverter::convert(input);
-    }
-    catch(...) {
-        std::cerr << "Too few number of arguments ma man!" << '\n';    
-    }
-    // fucking around to find out
-    // float x = 2E; // false
-    double x = 1e-1;
-
-    std::cout << std::fixed << static_cast<double>(x) << std::endl;
-    return 0;
+    if (argc == 2)
+        return ScalarConverter::convert(argv[1]), 0;
+    std::cout << "Error: Number Of Arguments!\n";
+    return 1;
 }
 
 
