@@ -16,9 +16,11 @@ class ScalarConverter {
         static bool isSpecialLiteral(std::string &input, bool doubleCheck);
         
         static void handleAsChar(std::string &input);
+        static void handleAsFloat(std::string &input);
 
         static bool validateSienNotation(std::string &input);
-        static int  checkSign(std::string &input); 
+        static int  checkSign(std::string &input);
+        static int  fractionLength(std::string &input);
 
     public:
         static void convert(std::string input);
@@ -49,7 +51,7 @@ bool ScalarConverter::validateSienNotation(std::string &input) {
 }
 
 bool ScalarConverter::isChar(std::string &input) {
-    return (input.length() == 1 && !isdigit(input[0]) && isprint(input[0]));
+    return (input.length() == 1 && !isdigit(input[0]));
 }
 
 bool ScalarConverter::isInt(std::string &input) {
@@ -145,10 +147,43 @@ bool ScalarConverter::isFloat(std::string &input) {
     return (!sawFSymbol ? false : true);
 }
 
+#include <iomanip>
 void ScalarConverter::handleAsChar(std::string &input) {
-    std::cout << "CHAR: " << input[0] << std::endl;
-    std::cout << "INT : " << static_cast<int>(input[0]) << std::endl;
+    std::cout << std::fixed << std::setprecision(1);
+    bool displayFlag = isprint(input[0]);
+    std::cout << "CHAR  : " << (displayFlag ? input : "Non Display Able") << std::endl;
+    std::cout << "INT   : " << static_cast<int>(input[0]) << std::endl;
+    std::cout << "DOUBLE: " << static_cast<double>(input[0]) << std::endl;
+    std::cout << "DOUBLE: " << static_cast<double>(input[0]) << "f" << std::endl;
 }
+
+
+void ScalarConverter::handleAsFloat(std::string &input) {
+    float value = std::strtof(input.c_str(), NULL);
+
+    if (value >= 0 && value <= 127 && isprint(value))
+        std::cout << "CHAR  : '" << static_cast<char>(value) << "'" << std::endl;
+    else if (value >= 0 && value <= 32 || value == 127)
+        std::cout << "CHAR  : Non displayable" << std::endl;
+    else
+        std::cout << "CHAR  : Impossible" << std::endl;
+        
+    // std::cout << std::fixed << std::setprecision(20);
+    for (int i = 0; i < input.length(); i++)
+        if (input[i] == '.')
+            std::cout << std::fixed << std::setprecision(1);
+    
+    std::cout << "int min is: " << INT_MAX << std::endl;
+    std::cout << "size of float and double here: " << sizeof(double) << std::endl;
+    if (value >= INT_MIN && value <= INT_MAX)
+        std::cout << "INT   : " << static_cast<int>(value) << std::endl;
+    else
+        std::cout << "INT   : Impossible" << std::endl;
+    std::cout << "FLOAT : " << value << "f" << std::endl;
+    std::cout << "DOUBLE: " << static_cast<double>(value) << std::endl;
+}
+
+
 
 void ScalarConverter::convert(std::string input) {
     if (input.empty()) {
@@ -169,19 +204,25 @@ void ScalarConverter::convert(std::string input) {
     } else if (isInt(input)) {
         std::cout << "# type: INT\n";
     } else if (isFloat(input)) {
-        std::cout << "# type: FLOAT\n";
+        handleAsFloat(input);
     } else if (isDouble(input)) {
         std::cout << "# type: Double\n";
     } else
         std::cout << "type: impossible\n";
 }
-
-int main(int argc, char const *argv[])
+#include <cstdlib>
+int main(int argc, char *argv[])
 {
-    if (argc == 2)
-        return ScalarConverter::convert(argv[1]), 0;
-    std::cout << "Error: Number Of Arguments!\n";
-    return 1;
+    // std::cout << static_cast<float>(inf);
+    float f = 3.5e38f;
+    std::cout << INFINITY;
+    // if (argc == 2)
+    //     return ScalarConverter::convert(argv[1]), 0;
+    // std::cout << "Error: Number Of Arguments!\n";
+    // std::string input = argv[1];
+    // float result = std::strtof(input.c_str(), nullptr);
+    // std::cout << result << std::endl;
+    return 0;
 }
 
 
