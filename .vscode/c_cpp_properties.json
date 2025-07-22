@@ -1,0 +1,22 @@
+
+
+{
+    "configurations": [
+      {
+        "name": "Win32",
+        "includePath": [
+          "${workspaceFolder}/**",
+          "C:/mingw/include/c++/9.2.0",          // adjust this path
+          "C:/mingw/lib/gcc/mingw32/9.2.0/include", // adjust if needed
+          "C:/mingw/include"
+        ],
+        "defines": [],
+        "compilerPath": "C:/mingw/bin/g++.exe",  // adjust this path
+        "cStandard": "c11",
+        "cppStandard": "c++17",
+        "intelliSenseMode": "windows-gcc-x64"
+      }
+    ],
+    "version": 4
+  }
+  
