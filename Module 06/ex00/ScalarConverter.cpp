@@ -1,100 +1,114 @@
 #include "ScalarConverter.hpp"
 
-int isSpecialLiteral(std::string &input) {
-    if (input == "nan" ||  input == "+inf" || input == "-inf")
-        return TYPES::DOUBLE;
-    if (input == "nanf" ||  input == "+inff" || input == "-inff")
-        return TYPES::FLOAT;
-    return TYPES::OTHER;
+ScalarConverter::ScalarConverter() { }
+
+ScalarConverter::ScalarConverter(const ScalarConverter &copy) { 
+    (void)copy;
 }
 
-void logToConsole(std::string &input) {
-    int     isSpeacial = isSpecialLiteral(input);
-    bool    isChar = (input.length() == 1 && !isdigit(input[0]));
-    double  value;
-    if (!isChar)
-        value = std::atof(input.c_str());
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other) {  
+    (void)other;
+    return *this;
+}
+
+ScalarConverter::~ScalarConverter() {  }
+
+bool ScalarConverter::ispseudoLiteral(const std::string &literal) {
+    if (literal == "nan" ||  literal == "+inf" || literal == "-inf" 
+        || literal == "nanf" ||  literal == "+inff" || literal == "-inff") {
+        return true;
+    }
+    return false;
+}
+
+void ScalarConverter::convert(const std::string &input) {
+    bool isPseudoLiteral = false;
+    double  value = 0.0;
+
+    std::string literal = input;
+    if (!isValidLiteral(literal) || literal.empty())
+        throw std::invalid_argument("Invalid Literal!");
+
+    if (ispseudoLiteral(literal)) {
+        std::cout << "here\n";
+        isPseudoLiteral = true;
+    } else if (literal.length() == 1 && !std::isdigit(literal[0])) {
+        value = literal[0];
+    } else
+        value = std::atof(literal.c_str());
+    
+    // CHAR
+    std::cout << "char: ";
+    if ( isPseudoLiteral || value < 0 || value > 127)
+        std::cout << "impossible\n";
+    else if (!std::isprint(value))
+        std::cout << "Non displayable\n";
     else
-        value = input[0];
-    std::cout << "value is: " << value << std::endl;
-    //CHAR
-    std::cout << value << std::endl;
-    std::cout << "#CHAR: ";
-    if (!isChar && (value >= 0 && value <= 31  || value == 127))
-        std::cout << "non displayable\n";
-    else if (!isChar && (value >= 32 && value <= 126))
-        std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
-    else
-        std::cout << "impossible" << std::endl;
-    //INT
-    std::cout << "#INT: ";
-    if (isSpeacial || value >= INT_MAX || value <= INT_MIN)
-        std::cout << "impossible" << std::endl;
+        std::cout << "'" << static_cast<char>(value) << "'\n";
+
+    // INT
+    std::cout << "int: ";
+    if (isPseudoLiteral || (value > std::numeric_limits<int>::max() || value < std::numeric_limits<int>::min()))
+        std::cout << "impossible\n";
     else
         std::cout << static_cast<int>(value) << std::endl;
-    //FLOAT
-    std::cout << "#FLOAT: ";
-    if (isSpeacial != TYPES::OTHER) {
-        std::cout << input;
-        if (isSpeacial == DOUBLE || input == "nan")
-            std::cout << "f";
-    }
+
+    // FLOAT
+    std::cout << "float: ";
+    if (literal == "nan" || literal == "nanf")
+        std::cout << "nanf\n";
+    else if (literal == "+inf" || literal == "+inff")
+        std::cout << "+inff\n";
+    else if (literal == "-inf" || literal == "-inff")
+        std::cout << "-inff\n";
     else {
-        std::cout << static_cast<float>(value);
-        if (value == static_cast<int>(value))
-            std::cout << ".0";
-        std::cout << "f";
+        float fval = static_cast<float>(value);
+        std::cout << std::fixed << std::setprecision(1) << fval << "f\n";
     }
-    std::cout << std::endl;
-    //DOUBLE
-    std::cout << "#DOUBLE: ";
-    if (isSpeacial == TYPES::DOUBLE)
-        std::cout << input;
-    else if (isSpeacial == TYPES::FLOAT)
-        std::cout << input.substr(0, input.length() - 1);
-    else {
-        std::cout << value;
-        if (value == static_cast<int>(value))
-            std::cout << ".0";
-    }
-    std::cout << std::endl;
+
+    // DOUBLE
+    std::cout << "double: ";
+    if (literal == "nan" || literal == "nanf")
+        std::cout << "nan\n";
+    else if (literal == "+inf" || literal == "+inff")
+        std::cout << "+inf\n";
+    else if (literal == "-inf" || literal == "-inff")
+        std::cout << "-inf\n";
+    else
+        std::cout << std::fixed << std::setprecision(1) << value << "\n";
 }
 
-bool validateInput(std::string &input) {
-    if (input.empty())
-        return false;
-    if (isSpecialLiteral(input) || (input.length() == 1 && !std::isdigit(input[0])))
-        return true;
-    int signNum = input[0] == '-' || input[0] == '+';
-    bool sawE = false, sawFloat = false, sawPoint = false;
-    int len = input.length();
-    for (int i = signNum; i < len; i++) {
-        char c = input[i];
-        if (c == '-' || c == '+') {
-            if ((input[i-1] != 'e' && input[i-1] != 'E') || signNum == 2)
+bool ScalarConverter::isValidLiteral(std::string &literal) {
+    if (literal.empty()) return false;
+
+    size_t begin, end;
+    for (begin = 0; std::isspace(literal[begin]); begin++);
+    for (end = literal.length() - 1; std::isspace(literal[end]); end--);
+    literal = literal.substr(begin, end - begin + 1);
+
+    if (ispseudoLiteral(literal)) return true;
+
+    if (literal.length() == 1 && !std::isdigit(literal[0])) return true;
+
+    int start = (literal[0] == '-' || literal[0] == '+') ? 1 : 0;
+    bool sawDot = false, sawF = false;
+    for (size_t i = start; i < literal.length(); ++i) {
+        char c = literal[i];
+        if (c == '.') {
+            if (sawDot || i == 0 || i == literal.length() - 1)
                 return false;
-            if (i == len-1 || !isdigit(input[i+1]))
-                return false;
-            signNum++;
-        } else if (c == 'e' || c == 'E') {
-            if (i == 1 || (!input[i+1] || (input[i-1] != '.' && !isdigit(input[i-1]))))
-                return false;
-            sawE = true;
+            sawDot = true;
         } else if (c == 'f' || c == 'F') {
-            if (sawFloat || i != len-1) return false;
-            sawFloat = true;
-        } else if (c == '.') {
-            if (sawPoint || i == 0 || i == len-1) return false;
-            sawPoint = true;
-        } else if (!isdigit(c) && c!='e' && c!='+' && c!='-' && c!='E' && c!='.' && c!='f')
+            if (sawF || i != (literal.length() - 1) || !sawDot)
+                return false;
+            sawF = true;
+        } else if (!std::isdigit(c) || std::isspace(c))
             return false;
     }
     return true;
 }
 
-void ScalarConverter::convert(std::string input) {
-    if (validateInput(input))
-        logToConsole(input);
-    else
-        std::cout << "not valid\n";
-}
+/*
+Some casts don’t get fully validated until the program is running.
+Example: dynamic_cast.
+*/
