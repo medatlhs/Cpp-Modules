@@ -2,28 +2,33 @@
 
 void identify(Base& p) {
     try {
-        dynamic_cast<A&>(p);
-        std::cout << "of type: class A\n";
+        A &derivedA = dynamic_cast<A&>(p);
+        std::cout << "Of Type: Class A\n";
+        (void)derivedA;
     } catch(...) {
         try {
-            dynamic_cast<B&>(p);
-            std::cout << "of type: class B\n";
+            B &derivedB = dynamic_cast<B&>(p);
+            std::cout << "Of Type: Class B\n";
+            (void)derivedB;
         } catch(...) {
             try {
-                dynamic_cast<C&>(p);
-                std::cout << "of type: class C\n";
-            } catch(...) { }
+                C &derivedC = dynamic_cast<C&>(p);
+                std::cout << "Of Type: Class C\n";
+                (void)derivedC;
+            } catch(...) {
+                std::cout << "Of Type: Unknown\n";
+            }
         }
     }
 }
 
 void identify(Base* p) {
     if (dynamic_cast<A*>(p))
-        std::cout << "of type: class A\n";
+        std::cout << "Of Type: Class A\n";
     else if (dynamic_cast<B*>(p))
-        std::cout << "of type: class B\n";
+        std::cout << "Of Type: Class B\n";
     else if (dynamic_cast<C*>(p))
-        std::cout << "of type: class C\n";
+        std::cout << "Of Type: Class C\n";
 }
 
 Base *generate(void) {
@@ -37,15 +42,12 @@ Base *generate(void) {
 }
 
 int main() {
-    // Base *base = generate();
+    Base *base = generate();
 
-    // identify(base);
-    // identify(*base);
+    identify(base);
+    identify(*base);
 
-    // delete base;
-
-    Base *b = new A;
-
+    delete base;
     return 0;
 }
 

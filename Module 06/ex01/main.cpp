@@ -2,10 +2,10 @@
 
 int main() {
     Data data;
-    data.name = "LMDNDN";
-    data.age = 24;
+    data.username = "moait-la";
 
-    std::cout << "address of data: " << &data << std::endl;
+    std::cout << "# Data Before Serialization: ";
+    std::cout << "data.username = " << data.username << std::endl;
 
     uintptr_t raw = Serializer::serialize(&data);
     std::cout << "raw data: " << raw << std::endl;
@@ -13,7 +13,8 @@ int main() {
     Data *dataPtr = Serializer::deserialize(raw);
     std::cout << "value of dataPtr: " << dataPtr << std::endl;
     
-    std::cout << "#Accessing data from dataPtr:\n";
-    std::cout << "name: " << dataPtr->name << " age: " << dataPtr->age << std::endl;
+    std::cout << "# Data after Serialization: ";
+    std::cout << "data.username = " << dataPtr->username << std::endl;
+
     return 0;
 }

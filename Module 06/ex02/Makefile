@@ -2,9 +2,8 @@ SRC = $(shell find ./ -name '*.cpp')
 INC = $(shell find ./ -name '*.hpp')
 OBJ = $(SRC:.cpp=.o)
 CC = c++
-RM = rm -f
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-NAME = serialization
+NAME = Identify_Real_Type
 
 all: $(NAME)
 
@@ -15,10 +14,10 @@ $(NAME): $(OBJ) $(INC)
 	$(CC) $(CPPFLAGS) $(OBJ) -o $(NAME)
 
 clean:
-	$(RM) $(OBJ)
+	rm -f $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean $(NAME)
 
