@@ -77,7 +77,11 @@
         "ios": "cpp",
         "locale": "cpp",
         "mutex": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "ranges": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "semaphore": "cpp"
     },
     "workbench.colorCustomizations": {
         "minimap.background": "#00000000",

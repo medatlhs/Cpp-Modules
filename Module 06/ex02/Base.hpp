@@ -1,9 +1,6 @@
 #pragma once
-#include <ctime>
-#include <iostream>
 
-class Base
-{
+class Base {
     public:
-        virtual ~Base() { };
+        virtual ~Base();
 };
