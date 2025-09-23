@@ -2,8 +2,9 @@ SRC = $(shell find ./ -name '*.cpp')
 INC = $(shell find ./ -name '*.hpp')
 OBJ = $(SRC:.cpp=.o)
 CC = c++
+RM = rm -f
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-NAME = identifyRealType
+NAME = Iter
 
 all: $(NAME)
 
@@ -14,11 +15,12 @@ $(NAME): $(OBJ) $(INC)
 	$(CC) $(CPPFLAGS) $(OBJ) -o $(NAME)
 
 clean:
-	rm -f $(OBJ)
+	$(RM) $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 
 re: fclean $(NAME)
 
 .PHONY: clean
+

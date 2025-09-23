@@ -1,114 +1,95 @@
-#include "ScalarConverter.hpp"
+#include "./ScalarConverter.hpp"
 
-ScalarConverter::ScalarConverter() { }
+ScalarConverter::ScalarConverter() {}
+ScalarConverter::~ScalarConverter() {}
+ScalarConverter::ScalarConverter(const ScalarConverter&) {}
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter&) { return *this; }
 
-ScalarConverter::ScalarConverter(const ScalarConverter &copy) { 
-    (void)copy;
-}
+void ScalarConverter::convert(const std::string &literal) {
+    std::string literaltrim = literal;
+    size_t begin, end;
+    for (begin = 0; std::isspace(literal[begin]); begin++);
+    for (end = literal.length() - 1; std::isspace(literal[end]); end--);
+    literaltrim = literal.substr(begin, end - begin + 1);
+    if (literaltrim.empty())
+        throw std::invalid_argument("Empty literal!");
 
-ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other) {  
-    (void)other;
-    return *this;
-}
-
-ScalarConverter::~ScalarConverter() {  }
-
-bool ScalarConverter::ispseudoLiteral(const std::string &literal) {
-    if (literal == "nan" ||  literal == "+inf" || literal == "-inf" 
-        || literal == "nanf" ||  literal == "+inff" || literal == "-inff") {
-        return true;
-    }
-    return false;
-}
-
-void ScalarConverter::convert(const std::string &input) {
-    bool isPseudoLiteral = false;
-    double  value = 0.0;
-
-    std::string literal = input;
-    if (!isValidLiteral(literal) || literal.empty())
-        throw std::invalid_argument("Invalid Literal!");
-
-    if (ispseudoLiteral(literal)) {
-        std::cout << "here\n";
-        isPseudoLiteral = true;
-    } else if (literal.length() == 1 && !std::isdigit(literal[0])) {
-        value = literal[0];
-    } else
-        value = std::atof(literal.c_str());
+    double value = 0.0;
+    bool   isPseudo = _isPseudolit(literaltrim);
+    if (_isCharlit(literaltrim) && !isPseudo)
+        value = static_cast<double>(literaltrim[0]);
+    else if (!_isNumericlit(literaltrim, value) && !isPseudo)
+        throw std::invalid_argument("Invalid literal!");
     
-    // CHAR
+    _printChar(value, isPseudo);
+    _printInt(value, isPseudo);
+    _printFloat(literaltrim, value);
+    _printDouble(literaltrim, value);
+}
+
+// Checkers
+bool ScalarConverter::_isCharlit(const std::string &literal) {
+    return literal.length() == 1 && !std::isdigit(literal[0]);
+}
+
+bool ScalarConverter::_isPseudolit(const std::string &literal) {
+    return (literal == "nan" || literal == "+inf" || literal == "-inf"
+            || literal == "nanf" || literal == "+inff" || literal == "-inff");
+}
+
+bool ScalarConverter::_isNumericlit(std::string &literal, double &value) {
+    bool isfloat = false;
+    size_t len = literal.length();
+    if (literal[len-1]=='f' || literal[len-1]=='F') {
+        isfloat = true;
+        literal = literal.substr(0, literal.length() - 1);
+    }
+    size_t pos = literal.find('.');
+    if ((isfloat && pos == std::string::npos ) || !pos || pos == (len-1) )
+        return false;
+    
+    std::stringstream ss(literal);
+    ss >> value;
+    if (!ss.eof()) return false;
+    return true;
+}
+
+// Printers
+void ScalarConverter::_printChar(double value, bool isPseudo) {
     std::cout << "char: ";
-    if ( isPseudoLiteral || value < 0 || value > 127)
+    if (isPseudo || value < 0 || value > 127)
         std::cout << "impossible\n";
     else if (!std::isprint(value))
         std::cout << "Non displayable\n";
     else
         std::cout << "'" << static_cast<char>(value) << "'\n";
+}
 
-    // INT
+void ScalarConverter::_printInt(double value, bool isPseudo) {
     std::cout << "int: ";
-    if (isPseudoLiteral || (value > std::numeric_limits<int>::max() || value < std::numeric_limits<int>::min()))
-        std::cout << "impossible\n";
-    else
+    if (isPseudo || value < std::numeric_limits<int>::min() 
+        || value > std::numeric_limits<int>::max()) {
+        std::cout << "impossible\n";    
+    } else
         std::cout << static_cast<int>(value) << std::endl;
+}
 
-    // FLOAT
+void ScalarConverter::_printFloat(const std::string &literal, double value) {
     std::cout << "float: ";
-    if (literal == "nan" || literal == "nanf")
-        std::cout << "nanf\n";
-    else if (literal == "+inf" || literal == "+inff")
-        std::cout << "+inff\n";
-    else if (literal == "-inf" || literal == "-inff")
-        std::cout << "-inff\n";
+    if (literal == "nan" || literal == "nanf") std::cout << "nanf\n";
+    else if (literal == "+inf" || literal == "+inff") std::cout << "+inff\n";
+    else if (literal == "-inf" || literal == "-inff") std::cout << "-inff\n";
     else {
-        float fval = static_cast<float>(value);
-        std::cout << std::fixed << std::setprecision(1) << fval << "f\n";
+        std::cout << std::fixed << static_cast<float>(value);
+        std::cout << "f" << std::endl;
     }
+}
 
-    // DOUBLE
+void ScalarConverter::_printDouble(const std::string &literal, double value) {
     std::cout << "double: ";
-    if (literal == "nan" || literal == "nanf")
-        std::cout << "nan\n";
-    else if (literal == "+inf" || literal == "+inff")
-        std::cout << "+inf\n";
-    else if (literal == "-inf" || literal == "-inff")
-        std::cout << "-inf\n";
+    if (literal == "nan" || literal == "nanf") std::cout << "nan\n";
+    else if (literal == "+inf" || literal == "+inff") std::cout << "+inf\n";
+    else if (literal == "-inf" || literal == "-inff") std::cout << "-inf\n";
     else
-        std::cout << std::fixed << std::setprecision(1) << value << "\n";
+        std::cout << std::fixed << value << std::endl;
 }
-
-bool ScalarConverter::isValidLiteral(std::string &literal) {
-    if (literal.empty()) return false;
-
-    size_t begin, end;
-    for (begin = 0; std::isspace(literal[begin]); begin++);
-    for (end = literal.length() - 1; std::isspace(literal[end]); end--);
-    literal = literal.substr(begin, end - begin + 1);
-
-    if (ispseudoLiteral(literal)) return true;
-
-    if (literal.length() == 1 && !std::isdigit(literal[0])) return true;
-
-    int start = (literal[0] == '-' || literal[0] == '+') ? 1 : 0;
-    bool sawDot = false, sawF = false;
-    for (size_t i = start; i < literal.length(); ++i) {
-        char c = literal[i];
-        if (c == '.') {
-            if (sawDot || i == 0 || i == literal.length() - 1)
-                return false;
-            sawDot = true;
-        } else if (c == 'f' || c == 'F') {
-            if (sawF || i != (literal.length() - 1) || !sawDot)
-                return false;
-            sawF = true;
-        } else if (!std::isdigit(c) || std::isspace(c))
-            return false;
-    }
-    return true;
-}
-
-/*
-Some casts don’t get fully validated until the program is running.
-Example: dynamic_cast.
-*/
