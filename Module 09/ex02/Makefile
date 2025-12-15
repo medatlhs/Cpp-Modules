@@ -1,10 +1,10 @@
-SRC = BitcoinExchange.cpp main.cpp
-INC = BitcoinExchange.hpp
+SRC = PmergeMe.cpp main.cpp
+INC = PmergeMe.hpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++
 RM = rm -f
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-NAME = btc
+NAME = PmergeMe
 all: $(NAME)
 %.o: %.cpp $(INC)
 	$(CC) $(CPPFLAGS) -c $< -o $@
