@@ -1,5 +1,5 @@
-SRC = $(shell find ./ -name '*.cpp')
-INC = $(shell find ./ -name '*.hpp')
+SRC = main.cpp
+INC = iter.hpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++
 RM = rm -f
@@ -11,7 +11,7 @@ all: $(NAME)
 %.o: %.cpp $(INC)
 	$(CC) $(CPPFLAGS) -c $< -o $@
 	
-$(NAME): $(OBJ) $(INC)
+$(NAME): $(OBJ)
 	$(CC) $(CPPFLAGS) $(OBJ) -o $(NAME)
 
 clean:
@@ -20,7 +20,7 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 
-re: fclean $(NAME)
+re: fclean all
 
 .PHONY: clean
 

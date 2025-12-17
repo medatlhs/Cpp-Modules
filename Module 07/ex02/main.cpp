@@ -1,19 +1,10 @@
-#include "Array.hpp"
 #include <iostream>
+#include "Array.hpp"
 #include <cstdlib>
-#include <ctime>
 
 #define MAX_VAL 750
-
 int main(int, char**)
 {
-    int *ptr = new int(0);
-    std::cout << *ptr << std::endl;
-
-    Array<int> intergers(0);
-    std::cout << intergers[0] << std::endl;
-    std::cout << "---------------------------\n";
-
     Array<int> numbers(MAX_VAL);
     int* mirror = new int[MAX_VAL];
     srand(time(NULL));
@@ -25,8 +16,7 @@ int main(int, char**)
     }
     //SCOPE
     {
-        Array<int> tmp;
-        tmp = numbers;
+        Array<int> tmp = numbers;
         Array<int> test(tmp);
     }
 

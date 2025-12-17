@@ -1,18 +1,18 @@
 #pragma once 
 
-
 #include <iostream>
 #include <vector>
 #include <deque>
+#include <sstream>
+#include <climits>
+#include <ctime>
+#include <stdexcept> 
 
 class PmergeMe {
     private:
-        std::vector< std::pair<int, int> > pairedNumbers;
-        int   struggler;
-    
-        // utils 
+        int getJacobNumber(int n); 
         std::string trim(const std::string& number);
-        void        pairNumbers(std::vector<int>& numbers);
+
     public:
         PmergeMe();
         PmergeMe(const PmergeMe& other);
@@ -20,7 +20,7 @@ class PmergeMe {
         ~PmergeMe(); 
  
         std::vector<int> parseInput(int ac, char** av);
-        
+
         template<typename T>
         void fordJohnsonSort(T& container); 
 };

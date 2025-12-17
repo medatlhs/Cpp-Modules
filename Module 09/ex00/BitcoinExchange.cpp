@@ -18,11 +18,9 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other) {
 
 void BitcoinExchange::loadData(const std::string &dataFile)
 {
-    std::ifstream file(dataFile);
-    if (!file.is_open()) {
-        std::cerr << "Error: could not open database file." << std::endl; 
-        return;
-    }
+    std::ifstream file(dataFile.c_str());
+    if (!file.is_open())
+        throw std::runtime_error("Error: could not open database file.");
 
     std::string line;
     std::getline(file, line);
@@ -48,14 +46,21 @@ std::string BitcoinExchange::trimSpaces(const std::string &s) {
     return s.substr(start, end - start + 1);
 }
 
+int BitcoinExchange::toInt(const std::string &str) {
+    int nbr;
+    std::stringstream ss(str);
+    ss >> nbr;
+    return nbr;
+}
+
 bool BitcoinExchange::isValidDate(const std::string &date)
 {
     std::string trimmedDate = trimSpaces(date);
     if (trimmedDate.length() != 10 || trimmedDate[4] != '-' || trimmedDate[7] != '-') 
         return false; 
-    int year = std::atoi(trimmedDate.substr(0, 4).c_str());
-    int month = std::atoi(trimmedDate.substr(5, 2).c_str());
-    int day = std::atoi(trimmedDate.substr(8, 2).c_str()); 
+    int year = toInt(trimmedDate.substr(0, 4));
+    int month = toInt(trimmedDate.substr(5, 2));
+    int day = toInt(trimmedDate.substr(8, 2)); 
  
     if (month < 1 || month > 12 || day < 1 || day > 31)
         return false; 
@@ -85,11 +90,10 @@ bool BitcoinExchange::isValidValue(const std::string &value)
 
 void BitcoinExchange::processInputFile(const std::string &inputFile)
 {
-    std::ifstream file(inputFile);
-    if (!file.is_open()) {
-        std::cerr << "Error: could not open input file." << std::endl;
-        return;
-    }
+    std::ifstream file(inputFile.c_str());
+    if (!file.is_open())
+        throw std::runtime_error("Error: could not open input file.");
+
     std::string line;
     std::getline(file, line);
     while (std::getline(file, line))

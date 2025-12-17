@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <stdexcept> 
 
 class BitcoinExchange {
     private:
@@ -10,6 +11,7 @@ class BitcoinExchange {
         bool isValidDate(const std::string& date);
         bool isValidValue(const std::string& value);
         std::string trimSpaces(const std::string &s);
+        int     toInt(const std::string &str);
 
     public:
         BitcoinExchange();

@@ -1,7 +1,7 @@
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp whatever.cpp
+SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 NAME = whatever
 
@@ -10,7 +10,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
-%.o: %.cpp ScalarConverter.hpp
+%.o: %.cpp whatever.hpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:

@@ -39,7 +39,7 @@ Array<T>::~Array() {
 
 template <typename T>
 T& Array<T>::operator[](unsigned int index) {
-    if (index >= len)
+    if (index >= len || !data)
         throw std::out_of_range("Index out of bounds");
     return data[index];
 }
@@ -49,9 +49,3 @@ unsigned int Array<T>::size() const {
     return len;
 }
 
-template <typename T>
-const T& Array<T>::operator[](unsigned int index) const {
-    if (index >= len)
-        throw std::out_of_range("Index out of bounds");
-    return data[index];
-}

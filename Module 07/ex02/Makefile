@@ -1,15 +1,14 @@
-SRC = $(shell find ./ -name '*.cpp')
-INC = $(shell find ./ -name '*.hpp')
-TEMP = $(shell find ./ -name '*.tpp')
+SRC = main.cpp
+INC = Array.hpp Array.tpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++
 RM = rm -f
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 NAME = Array
 
-all: $(NAME) 
+all: $(NAME)
 
-%.o: %.cpp $(INC) $(TEMP)
+%.o: %.cpp $(INC)
 	$(CC) $(CPPFLAGS) -c $< -o $@
 	
 $(NAME): $(OBJ) $(INC)
@@ -21,7 +20,7 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 
-re: fclean $(NAME)
+re: fclean all
 
 .PHONY: clean
 

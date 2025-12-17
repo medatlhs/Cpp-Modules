@@ -1,5 +1,5 @@
 SRC = PmergeMe.cpp main.cpp
-INC = PmergeMe.hpp
+INC = PmergeMe.hpp PmergeMe.tpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++
 RM = rm -f

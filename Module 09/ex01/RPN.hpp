@@ -5,10 +5,11 @@
 #include <stack>
 #include <string>
 #include <iostream>
+#include <list>
 
 class RPN {
     private:
-        std::stack<int> _stack;
+        std::stack<int, std::list<int> > _stack;
         bool isOperator(const std::string& token);
         int  operation(int first, int second, const std::string& oper);
 
